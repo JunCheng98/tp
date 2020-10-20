@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
 import java.util.function.Predicate;
@@ -49,6 +48,21 @@ public class RedoCommandTest {
 
         assertEquals(RedoCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
         assertEquals(updateStack.getSize(), 0);
+    }
+
+    @Test
+    public void execute_noRedoAvailable_throwsCommandException() {
+        RedoCommand redoCommand = new RedoCommand();
+        ModelStub modelStub = new ModelStub();
+        String exceptionMessage = "";
+
+        try {
+            CommandResult commandResult = redoCommand.execute(modelStub);
+        } catch (CommandException e) {
+            exceptionMessage = e.getMessage();
+        }
+
+        assertEquals(RedoCommand.MESSAGE_NO_REDO, exceptionMessage);
     }
 
     @Test
