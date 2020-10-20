@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.HistoryStack;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -48,21 +47,6 @@ public class RedoCommandTest {
 
         assertEquals(RedoCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
         assertEquals(updateStack.getSize(), 0);
-    }
-
-    @Test
-    public void execute_noRedoAvailable_throwsCommandException() {
-        RedoCommand redoCommand = new RedoCommand();
-        ModelStub modelStub = new ModelStub();
-        String exceptionMessage = "";
-
-        try {
-            CommandResult commandResult = redoCommand.execute(modelStub);
-        } catch (CommandException e) {
-            exceptionMessage = e.getMessage();
-        }
-
-        assertEquals(RedoCommand.MESSAGE_NO_REDO, exceptionMessage);
     }
 
     @Test
