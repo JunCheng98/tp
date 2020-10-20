@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 /**
- * Encapsulates a stack containing various states of the ZooKeepBook.
+ * Encapsulates a stack containing various past states of the ZooKeepBook.
  * This is a singleton.
  */
 public class HistoryStack {

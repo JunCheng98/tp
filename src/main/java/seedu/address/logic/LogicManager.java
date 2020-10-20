@@ -15,6 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.HistoryStack;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyZooKeepBook;
+import seedu.address.model.UpdateStack;
 import seedu.address.model.ZooKeepBook;
 import seedu.address.model.animal.Animal;
 import seedu.address.storage.Storage;
@@ -30,6 +31,7 @@ public class LogicManager implements Logic {
     private final Storage storage;
     private final ZooKeepBookParser zooKeepBookParser;
     private final HistoryStack historyStack;
+    private final UpdateStack updateStack;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -39,6 +41,8 @@ public class LogicManager implements Logic {
         this.storage = storage;
         zooKeepBookParser = new ZooKeepBookParser();
         historyStack = HistoryStack.getHistoryStack();
+        updateStack = UpdateStack.getUpdateStack();
+
         historyStack.addToHistory(new ZooKeepBook(model.getZooKeepBook()));
     }
 
@@ -46,12 +50,23 @@ public class LogicManager implements Logic {
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
+        ReadOnlyZooKeepBook currentUpdate = new ZooKeepBook();
+        boolean isEmpty = true;
+        if (updateStack.getSize() > 0) {
+            currentUpdate = updateStack.viewRecentUpdate();
+            isEmpty = false;
+        }
+
         CommandResult commandResult;
         Command command = zooKeepBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
         ReadOnlyZooKeepBook book = model.getZooKeepBook();
         historyStack.addToHistory(new ZooKeepBook(book));
+
+        if (!commandText.equals("undo") && !isEmpty) {
+            updateStack.checkEdit(currentUpdate, book); // clear update stack if a new edit has been made
+        }
 
         logger.info("--------------- ADDED CHANGE TO HISTORY STACK");
         logger.info(historyStack.toString());
