@@ -30,7 +30,6 @@ public class UpdateStack {
      */
     public void checkEdit(ReadOnlyZooKeepBook before, ReadOnlyZooKeepBook after) {
         if (!before.equals(after)) {
-            System.out.println("Cleared stack.");
             clearUpdates();
         }
     }
