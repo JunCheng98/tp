@@ -42,7 +42,7 @@ public class RedoCommandTest {
         historyStack.addToHistory(bookA);
         historyStack.addToHistory(bookB);
 
-        RedoCommandTest.ModelStub modelStub = new RedoCommandTest.ModelStub();
+        ModelStub modelStub = new ModelStub();
 
         CommandResult testResult = new UndoCommand().execute(modelStub);
         CommandResult commandResult = new RedoCommand().execute(modelStub);
@@ -54,7 +54,7 @@ public class RedoCommandTest {
     @Test
     public void execute_noRedoAvailable_throwsCommandException() {
         RedoCommand redoCommand = new RedoCommand();
-        RedoCommandTest.ModelStub modelStub = new RedoCommandTest.ModelStub();
+        ModelStub modelStub = new ModelStub();
 
         assertThrows(CommandException.class, RedoCommand.MESSAGE_NO_REDO, () -> redoCommand.execute(modelStub));
     }
