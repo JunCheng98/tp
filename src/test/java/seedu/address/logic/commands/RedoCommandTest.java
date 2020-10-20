@@ -52,14 +52,6 @@ public class RedoCommandTest {
     }
 
     @Test
-    public void execute_noRedoAvailable_throwsCommandException() {
-        RedoCommand redoCommand = new RedoCommand();
-        ModelStub modelStub = new ModelStub();
-
-        assertThrows(CommandException.class, RedoCommand.MESSAGE_NO_REDO, () -> redoCommand.execute(modelStub));
-    }
-
-    @Test
     public void equals() {
         HistoryStack historyStack = HistoryStack.getHistoryStack();
         historyStack.clearHistory();
