@@ -21,17 +21,6 @@ public class UpdateStackTest {
     }
 
     @Test
-    public void execute_addToUpdate_duplicate() {
-        ZooKeepBook bookA = new ZooKeepBook();
-        ZooKeepBook bookB = new ZooKeepBook();
-        UpdateStack updateStack = UpdateStack.getUpdateStack();
-        updateStack.clearUpdates();
-        updateStack.addToUpdate(bookA);
-        updateStack.addToUpdate(bookB);
-        assertEquals(updateStack.toString(), "[0 animals, 0 animals]");
-    }
-
-    @Test
     public void execute_removeRecentUpdate() {
         ZooKeepBook book = new ZooKeepBook();
         UpdateStack updateStack = UpdateStack.getUpdateStack();
